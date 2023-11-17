@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('{page}', [PageController::class, 'index'])->name('pages.show');
+Route::get('{parent}/{page}', [PageController::class, 'childIndex'])->name('pages.child.show');
