@@ -20,19 +20,18 @@ class PageController extends Controller
         SEOTools::opengraph()->addImage($page->getSEOImageUrl());
 
 
-        return view('page.index', [
+        return view('pages.index', [
             'page' => $page,
             'title' => $page->title,
         ]);
     }
 
     public function childIndex(Page $parent, Page $page) {
-        //check if the page is a child of the parent
+
         if(!$parent->isParentOf($page)){
             abort(404);
         }
 
-        //render the page with the regular page index function of the controller, or invoke the correct controller here:
         return $this->index($page);
     }
 }

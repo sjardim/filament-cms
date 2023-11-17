@@ -16,6 +16,7 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "pboivin/filament-peek": "^2.0",
         "statikbe/laravel-filament-flexible-content-blocks": "^0.2.8"
     },
     "require-dev": {
