@@ -24,17 +24,12 @@ class EditPage extends EditRecord
         ];
     }
 
-    protected function getPreviewModalView()
+    protected function getPreviewModalView(): string
     {
-        $record = $this->getRecord();
-
-        return view('pages.preview', [
-            'page' => $this->getRecord(),
-            'title' => $record->title,
-        ]);
+        return 'pages.index';
     }
 
-    protected function getPreviewModalDataRecordKey(): ?string
+    protected function getPreviewModalDataRecordKey(): string
     {
         return 'page';
     }
