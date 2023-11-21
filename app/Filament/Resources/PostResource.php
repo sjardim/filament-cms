@@ -6,12 +6,28 @@ use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
 use App\Models\Post;
 use Filament\Forms;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\AuthorField;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\ContentBlocksField;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\Groups\HeroImageSection;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\Groups\OverviewFields;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\Groups\PublicationSection;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\Groups\SEOFields;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\IntroField;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\SlugField;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Form\Fields\TitleField;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Actions\PublishAction;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Actions\ViewAction;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Columns\PublishedColumn;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Columns\TitleColumn;
+use Statikbe\FilamentFlexibleContentBlocks\Filament\Table\Filters\PublishedFilter;
 
 class PostResource extends Resource
 {
@@ -23,38 +39,31 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('author_id')
-                    ->relationship('author', 'name'),
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('subtitle')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('intro')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\FileUpload::make('hero_image_copyright')
-                    ->image(),
-                Forms\Components\FileUpload::make('hero_image_title')
-                    ->image(),
-                Forms\Components\DateTimePicker::make('publishing_begins_at'),
-                Forms\Components\DateTimePicker::make('publishing_ends_at'),
-                Forms\Components\TextInput::make('seo_title')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('seo_description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('seo_keywords'),
-                Forms\Components\TextInput::make('overview_title')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('overview_description')
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('content_blocks')
-                    ->required(),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
+                Tabs::make()
+                    ->columnSpan(2)
+                    ->tabs([
+                        Tab::make('General')
+                            ->schema([
+                                TitleField::create(true),
+                                SlugField::create(),
+                                PublicationSection::create(),
+                                AuthorField::create(),
+                                HeroImageSection::create(),
+                                IntroField::create(),
+                            ]),
+                        Tab::make('Content')
+                            ->schema([
+                                ContentBlocksField::create(),
+                            ]),
+                        Tab::make('Overview')
+                            ->schema([
+                                OverviewFields::create(),
+                            ]),
+                        Tab::make('SEO')
+                            ->schema([
+                                SEOFields::create(),
+                            ]),
+                    ]),
             ]);
     }
 
@@ -62,45 +71,17 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('author.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('subtitle')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('hero_image_copyright'),
-                Tables\Columns\ImageColumn::make('hero_image_title'),
-                Tables\Columns\TextColumn::make('publishing_begins_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('publishing_ends_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('seo_title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('overview_title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                TitleColumn::create(),
+                PublishedColumn::create(),
             ])
             ->actions([
+                ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                PublishAction::make(),
+            ])
+            ->filters([
+                PublishedFilter::create(),
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

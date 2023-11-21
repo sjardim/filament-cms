@@ -19,14 +19,14 @@ class EditPage extends EditRecord
         return [
 //            Actions\DeleteAction::make(),
 //            Actions\ForceDeleteAction::make(),
-//            Actions\RestoreAction::make(),
+            Actions\RestoreAction::make(),
             PreviewAction::make(),
         ];
     }
 
     protected function getPreviewModalView(): string
     {
-        return 'pages.index';
+        return 'pages.preview';
     }
 
     protected function getPreviewModalDataRecordKey(): string

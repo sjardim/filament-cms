@@ -20,7 +20,7 @@ class PageController extends Controller
         SEOTools::opengraph()->addImage($page->getSEOImageUrl());
 
 
-        return view('pages.index', [
+        return view('pages.show', [
             'page' => $page,
             'title' => $page->title,
         ]);

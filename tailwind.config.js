@@ -8,10 +8,9 @@ const colors = require('tailwindcss/colors')
 export default {
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './vendor/statikbe/laravel-filament-flexible-content-blocks/resources/views/**/*.blade.php',
         './storage/framework/views/*.php',
+        './config/filament-flexible-content-blocks.php',
         './resources/views/**/*.blade.php',
-        './config/filament-flexible-content-blocks.php'
     ],
 
     theme: {
