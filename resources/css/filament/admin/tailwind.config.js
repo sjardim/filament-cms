@@ -9,4 +9,5 @@ export default {
         './vendor/awcodes/filament-tiptap-editor/resources/**/*.blade.php',
         './vendor/pboivin/filament-peek/resources/**/*.blade.php',
     ],
+
 }

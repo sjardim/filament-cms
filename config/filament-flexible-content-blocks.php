@@ -318,15 +318,15 @@ return [
             ],
             'primary' => [
                 'label' => 'filament-flexible-content-blocks::filament-flexible-content-blocks.form_component.content_blocks.background_colour.primary',
-                'class' => 'bg-primary-500 text-primary-contrast',
+                'class' => 'bg-primary-200 text-primary-contrast',
             ],
             'secondary' => [
                 'label' => 'filament-flexible-content-blocks::filament-flexible-content-blocks.form_component.content_blocks.background_colour.secondary',
-                'class' => 'bg-secondary text-secondary-contrast',
+                'class' => 'bg-secondary-200 text-secondary-contrast',
             ],
-            'grey' => [
+            'gray' => [
                 'label' => 'filament-flexible-content-blocks::filament-flexible-content-blocks.form_component.content_blocks.background_colour.grey',
-                'class' => 'bg-slate-200',
+                'class' => 'bg-gray-200',
             ],
         ],
         'default' => 'default',
