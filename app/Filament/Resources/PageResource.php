@@ -6,6 +6,7 @@ use App\Filament\Resources\PageResource\Pages;
 use App\Filament\Resources\PageResource\RelationManagers;
 use App\Models\Page;
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Form;
@@ -33,6 +34,8 @@ class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 
+    protected static ?string $recordTitleAttribute = 'title';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -53,7 +56,12 @@ class PageResource extends Resource
                             ]),
                         Tab::make('Content')
                             ->schema([
-                                ContentBlocksField::create(),
+                                ContentBlocksField::create()
+                                    ->cloneable()
+                                    ->collapsible()
+                                    ->deleteAction(
+                                        fn (Action $action) => $action->requiresConfirmation(),
+                                    ),
                             ]),
                         Tab::make('Overview')
                             ->schema([

@@ -1,6 +1,7 @@
 <?php
 
 // config for Statikbe/FilamentFlexibleContentBlocks
+use App\Filament\ContentBlocks\AccordionBlock;
 use Spatie\Image\Manipulations;
 use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\CallToActionBlock;
 use Statikbe\FilamentFlexibleContentBlocks\ContentBlocks\CardsBlock;
@@ -44,6 +45,7 @@ return [
         TextImageBlock::class,
         OverviewBlock::class,
         QuoteBlock::class,
+        AccordionBlock::class,
         CallToActionBlock::class,
         CardsBlock::class,
         TemplateBlock::class,
