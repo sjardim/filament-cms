@@ -7,7 +7,7 @@
            @endif
 
            @if($summary)
-               <div class="mb-10 px-3 text-center text-lg text-gray-700 [text-wrap:balance]">
+               <div class="mb-10 px-3 text-center md:text-lg text-gray-700 [text-wrap:balance]">
                    {!! $replaceParameters($summary)  !!}
                </div>
            @endif
